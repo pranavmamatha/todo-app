@@ -14,7 +14,7 @@ function Todo({ title, description, completed }: TodoProps) {
       </div>
       <div>
         <button>Edit✒️</button>
-        <button>Complete✔️</button>
+        <input type="checkbox" />
       </div>
     </div>
   );
