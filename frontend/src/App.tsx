@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import Todo from "./components/Todo";
+// import Todo from "./components/Todo";
 import CreateTodo from "./components/CreateTodo";
 import "./App.css";
 interface TodoProps {
@@ -32,20 +32,10 @@ function App() {
   return (
     <>
       <div>
-        <div></div>
         <div>
-          {todos.map((e) => {
-            return (
-              <Todo
-                key={e._id}
-                _id={e._id}
-                title={e.title}
-                description={e.description}
-                completed={e.completed}
-              />
-            );
-          })}
+          <CreateTodo todos={todos} setTodos={setTodos} />
         </div>
+        <div></div>
       </div>
     </>
   );

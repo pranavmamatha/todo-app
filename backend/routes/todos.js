@@ -17,6 +17,7 @@ router.get("/", idCheckMiddleware, async (req, res) => {
 
 router.post("/create-todo", idCheckMiddleware, async (req, res) => {
   try {
+    console.log(req.body);
     const createTodo = await Todo.create(req.body);
     res.status(201).json({
       message: "Created Todo Sucessfully",
