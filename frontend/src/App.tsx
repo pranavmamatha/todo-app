@@ -13,7 +13,8 @@ interface TodoProps {
 function App() {
   const [todos, setTodos] = useState<TodoProps[]>([]);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
-  useEffect(() => {
+
+  function fetchTodo() {
     const myHeader = new Headers();
     myHeader.append("id", "0");
     fetch(`${backendURL}todos`, {
@@ -27,15 +28,37 @@ function App() {
         setTodos(data);
       })
       .catch((error) => console.log("error", error));
+  }
+
+  useEffect(() => {
+    fetchTodo();
   }, []);
 
   return (
     <>
       <div>
         <div>
-          <CreateTodo todos={todos} setTodos={setTodos} />
+          <CreateTodo fetchTodo={fetchTodo} />
         </div>
-        <div></div>
+        <div>
+          {todos.map((e) => {
+            return (
+              <div key={e._id}>
+                <hr />
+                <hr />
+                <hr />
+                <hr />
+                <hr />
+                <hr />
+                <hr />
+                <hr />
+                <h3>{e.title}</h3>
+                <p>{e.description}</p>
+                <p>{e.completed ? "Completed" : "Not Completed"}</p>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </>
   );

@@ -1,116 +1,68 @@
-import { useState } from "react";
-
-interface TodoProps {
-  _id: string;
-  title: string;
-  description: string;
-  completed: boolean;
-  __v: number;
-}
-
-function CreateTodo(props: {
-  todos: Array<TodoProps>;
-  setTodos: (a: Array<TodoProps>) => void;
-}) {
-  const [title, setTitle] = useState<string>("");
-  const [description, setDescription] = useState<string>("");
-  function handleChange(): void {
-    const titleElement = document.getElementById(
-      "title"
-    ) as HTMLInputElement | null;
-    const descriptionElement = document.getElementById(
-      "description"
-    ) as HTMLTextAreaElement | null;
-    if (titleElement && descriptionElement) {
-      setTitle(titleElement.value);
-      setDescription(descriptionElement.value);
-    }
-  }
-
-  async function uploadTodo(): Promise<void> {
-    if (title.trim() != "" || description.trim() != "") {
-      try {
-        const data = JSON.stringify({
-          title: title,
-          description: description,
-        });
-        console.log(data);
-        const myHeader = new Headers();
-        myHeader.append("id", "0");
-        myHeader.append("Content-type", "application/json; charset=UTF-8");
-        const fetchData = await fetch(
-          `${import.meta.env.VITE_BACKEND_URL}todos/create-todo`,
-          {
-            method: "POST",
-            body: data,
-            headers: myHeader,
-          }
-        );
-
-        const result = await fetchData.json();
-        const x = await result.data;
-        props.setTodos([
-          ...props.todos,
-          {
-            _id: x._id,
-            title: x.title,
-            description: x.description,
-            completed: x.completed,
-            __v: x.__v,
-          },
-        ]);
-
-        console.log("here");
-        console.log(props.todos);
-      } catch (error) {
-        console.log("Error", error);
-      }
+function CreateTodo(props: { fetchTodo: () => void }) {
+  async function handleClick() {
+    const titleElement = (document.getElementById("title") as HTMLInputElement)
+      .value;
+    const descriptionElement = (
+      document.getElementById("description") as HTMLTextAreaElement
+    ).value;
+    if (titleElement != "" && descriptionElement != "") {
+      const body = JSON.stringify({
+        title: titleElement,
+        description: descriptionElement,
+      });
+      const myHeader = new Headers();
+      myHeader.append("id", "0");
+      myHeader.append("Accept", "application/json");
+      myHeader.append("Content-Type", "application/json");
+      const fetchData = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}todos/create-todo`,
+        { method: "POST", headers: myHeader, body: body }
+      );
+      const data = await fetchData.json();
+      console.log(data.message);
+      (document.getElementById("title") as HTMLInputElement).value = "";
+      (document.getElementById("description") as HTMLTextAreaElement).value =
+        "";
+      props.fetchTodo();
     } else {
-      alert("Fill The title and description both");
+      alert("Title or description is empty");
     }
   }
 
   return (
     <div>
       <div>
-        <input
-          id="title"
-          type="text"
-          placeholder="Title"
-          onChange={handleChange}
-        />
+        <input id="title" type="text" placeholder="title" />
         <button
           onClick={() => {
             const titleElement = document.getElementById(
               "title"
-            ) as HTMLInputElement | null;
+            ) as HTMLInputElement;
             if (titleElement) {
               titleElement.value = "";
             }
           }}
         >
-          ❎
-        </button>
-        <textarea
-          id="description"
-          placeholder="Description"
-          onChange={handleChange}
-        ></textarea>
-        <button
-          onClick={() => {
-            const descriptionElement = document.getElementById(
-              "description"
-            ) as HTMLTextAreaElement | null;
-            if (descriptionElement) {
-              descriptionElement.value = "";
-            }
-          }}
-        >
-          ❎
+          ❌
         </button>
       </div>
       <div>
-        <button onClick={uploadTodo}>Create✅</button>
+        <textarea id="description" placeholder="description"></textarea>
+        <button
+          onClick={() => {
+            const descriptionELement = document.getElementById(
+              "description"
+            ) as HTMLTextAreaElement;
+            if (descriptionELement) {
+              descriptionELement.value = "";
+            }
+          }}
+        >
+          ❌
+        </button>
+      </div>
+      <div>
+        <button onClick={handleClick}>Create✅</button>
       </div>
     </div>
   );
