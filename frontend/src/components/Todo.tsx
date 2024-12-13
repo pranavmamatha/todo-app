@@ -31,13 +31,33 @@ function Todo(props: {
       console.log("Error", error);
     }
   }
+
+  async function handleDelete() {
+    try {
+      const myHeader = new Headers();
+      myHeader.append("id", "0");
+      const fetchData = await fetch(
+        `${import.meta.env.VITE_BACKEND_URL}todos/delete-todo/${props._id}`,
+        {
+          method: "DELETE",
+          headers: myHeader,
+        }
+      );
+      const data = await fetchData.json();
+      console.log(data.message);
+      props.fetchTodo();
+    } catch (error) {
+      console.log("Error", error);
+    }
+  }
+
   return (
     <div>
       <div>{props.title}</div>
       <div>{props.description}</div>
       <div>
         <button>✏️</button>
-        <button></button>
+        <button onClick={handleDelete}>🗑️</button>
         <input
           onChange={() => {
             handleClick("checkbox");
