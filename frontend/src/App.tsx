@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-// import Todo from "./components/Todo";
+import Todo from "./components/Todo";
 import CreateTodo from "./components/CreateTodo";
 import "./App.css";
+import { describe } from "node:test";
 interface TodoProps {
   _id: string;
   title: string;
@@ -43,19 +44,15 @@ function App() {
         <div>
           {todos.map((e) => {
             return (
-              <div key={e._id}>
-                <hr />
-                <hr />
-                <hr />
-                <hr />
-                <hr />
-                <hr />
-                <hr />
-                <hr />
-                <h3>{e.title}</h3>
-                <p>{e.description}</p>
-                <p>{e.completed ? "Completed" : "Not Completed"}</p>
-              </div>
+              <Todo
+                key={e._id}
+                _id={e._id}
+                title={e.title}
+                description={e.description}
+                completed={e.completed}
+                __v={e.__v}
+                fetchTodo={fetchTodo}
+              />
             );
           })}
         </div>
