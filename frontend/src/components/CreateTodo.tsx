@@ -5,7 +5,7 @@ function CreateTodo(props: { fetchTodo: () => void }) {
         document.getElementById("title") as HTMLInputElement
       ).value;
       const descriptionElement = (
-        document.getElementById("description") as HTMLTextAreaElement
+        document.getElementById("description") as HTMLInputElement
       ).value;
       if (titleElement != "" && descriptionElement != "") {
         const body = JSON.stringify({
@@ -23,8 +23,7 @@ function CreateTodo(props: { fetchTodo: () => void }) {
         const data = await fetchData.json();
         console.log(data.message);
         (document.getElementById("title") as HTMLInputElement).value = "";
-        (document.getElementById("description") as HTMLTextAreaElement).value =
-          "";
+        (document.getElementById("description") as HTMLInputElement).value = "";
         props.fetchTodo();
       } else {
         alert("Title or description is empty");
@@ -36,8 +35,13 @@ function CreateTodo(props: { fetchTodo: () => void }) {
 
   return (
     <div>
-      <div>
-        <input id="title" type="text" placeholder="title" />
+      <div className="flex flex-row mb-2">
+        <input
+          id="title"
+          type="text"
+          placeholder="title"
+          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        />
         <button
           onClick={() => {
             const titleElement = document.getElementById(
@@ -47,27 +51,38 @@ function CreateTodo(props: { fetchTodo: () => void }) {
               titleElement.value = "";
             }
           }}
+          className="bg-[#F5D1C8] rounded-3xl p-2"
         >
           ❌
         </button>
       </div>
-      <div>
-        <textarea id="description" placeholder="description"></textarea>
+      <div className="flex flex-row mb-2">
+        <input
+          id="description"
+          placeholder="description"
+          className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+        ></input>
         <button
           onClick={() => {
             const descriptionELement = document.getElementById(
               "description"
-            ) as HTMLTextAreaElement;
+            ) as HTMLInputElement;
             if (descriptionELement) {
               descriptionELement.value = "";
             }
           }}
+          className="bg-[#F5D1C8] rounded-3xl p-2"
         >
           ❌
         </button>
       </div>
       <div>
-        <button onClick={handleClick}>Create✅</button>
+        <button
+          onClick={handleClick}
+          className="bg-[#d1ffbd] w-30 rounded-3xl p-2 mb-2"
+        >
+          Create✅
+        </button>
       </div>
     </div>
   );

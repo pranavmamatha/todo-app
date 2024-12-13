@@ -47,11 +47,11 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className="w-[750px] h-[650px] rounded-3xl p-10 bg-[#e3f0af] m-10">
         <div>
           <CreateTodo fetchTodo={fetchTodo} />
         </div>
-        <div>
+        <div className="border-2 rounded-3xl p-2 bg-[#F0BB78] h-[450px] max-h-[450px] overflow-y-auto">
           {todos.map((e) => {
             return (
               <Todo

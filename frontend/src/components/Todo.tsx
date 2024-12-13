@@ -82,13 +82,26 @@ function Todo(props: {
   }
 
   return (
-    <div>
-      <div>{props.title}</div>
-      <div>{props.description}</div>
-      <div>
-        <button onClick={handleUpdate}>✏️</button>
-        <button onClick={handleDelete}>🗑️</button>
+    <div className="rounded-3xl p-3 bg-[#FBF6E9] my-2 flex flex-row">
+      <div className="w-[600px]">
+        <div className="text-xl font-bol">{props.title}</div>
+        <div className="text-gray-500	">{props.description}</div>
+      </div>
+      <div className="flex flex-col">
+        <button
+          onClick={handleUpdate}
+          className="bg-[#C3E5D8] rounded-3xl p-2 mb-2"
+        >
+          ✏️
+        </button>
+        <button
+          onClick={handleDelete}
+          className="bg-[#5DADD9] rounded-3xl p-2 mb-2"
+        >
+          🗑️
+        </button>
         <input
+          className="h-6 p-2"
           onChange={() => {
             handleCheckBox();
           }}
