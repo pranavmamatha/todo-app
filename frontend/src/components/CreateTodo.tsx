@@ -51,7 +51,7 @@ function CreateTodo(props: { fetchTodo: () => void }) {
               titleElement.value = "";
             }
           }}
-          className="bg-[#F5D1C8] rounded-3xl p-2"
+          className="bg-[#F5D1C8] rounded-3xl p-2 ml-2"
         >
           ❌
         </button>
@@ -71,7 +71,7 @@ function CreateTodo(props: { fetchTodo: () => void }) {
               descriptionELement.value = "";
             }
           }}
-          className="bg-[#F5D1C8] rounded-3xl p-2"
+          className="bg-[#F5D1C8] rounded-3xl p-2 ml-2"
         >
           ❌
         </button>
@@ -79,7 +79,7 @@ function CreateTodo(props: { fetchTodo: () => void }) {
       <div>
         <button
           onClick={handleClick}
-          className="bg-[#d1ffbd] w-30 rounded-3xl p-2 mb-2"
+          className="bg-[#d1ffbd] w-30 rounded-3xl p-2 mb-2 mx-auto flex justify-center"
         >
           Create✅
         </button>

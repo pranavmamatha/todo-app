@@ -47,7 +47,7 @@ function App() {
 
   return (
     <>
-      <div className="w-[750px] h-[650px] rounded-3xl p-10 bg-[#e3f0af] m-10">
+      <div className="w-[750px] h-[680px] rounded-3xl p-10 bg-[#e3f0af] m-10">
         <div>
           <CreateTodo fetchTodo={fetchTodo} />
         </div>
