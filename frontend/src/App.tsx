@@ -26,7 +26,17 @@ function App() {
         return result.json();
       })
       .then((data) => {
-        setTodos(data);
+        let notChecked: TodoProps[] = [];
+        let checked: TodoProps[] = [];
+        data.forEach((todo: TodoProps) => {
+          if (todo.completed) {
+            checked.push(todo);
+          } else {
+            notChecked.push(todo);
+          }
+        });
+        const todos = notChecked.concat(checked);
+        setTodos(todos);
       })
       .catch((error) => console.log("error", error));
   }
