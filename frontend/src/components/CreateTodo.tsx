@@ -30,7 +30,7 @@ function CreateTodo(props: { fetchTodo: () => void }) {
         alert("Title or description is empty");
       }
     } catch (error) {
-      console.log("Error", error);
+      console.log("Error:", error);
     }
   }
 

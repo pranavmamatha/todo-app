@@ -6,7 +6,7 @@ function Todo(props: {
   __v: number;
   fetchTodo: () => void;
 }) {
-  async function handleClick(a: string) {
+  async function handleCheckBox() {
     try {
       const myHeader = new Headers();
       myHeader.append("id", "0");
@@ -14,7 +14,7 @@ function Todo(props: {
       const myBody = JSON.stringify({
         title: props.title,
         description: props.description,
-        completed: a == "checkbox" ? !props.completed : props.completed,
+        completed: !props.completed,
       });
       const fetchData = await fetch(
         `${import.meta.env.VITE_BACKEND_URL}todos/update-todo/${props._id}`,
@@ -28,7 +28,7 @@ function Todo(props: {
       console.log(data.message);
       props.fetchTodo();
     } catch (error) {
-      console.log("Error", error);
+      console.log("Error:", error);
     }
   }
 
@@ -47,7 +47,37 @@ function Todo(props: {
       console.log(data.message);
       props.fetchTodo();
     } catch (error) {
-      console.log("Error", error);
+      console.log("Error:", error);
+    }
+  }
+
+  async function handleUpdate() {
+    try {
+      const title = prompt("Title", props.title);
+      const description = prompt("Description", props.description);
+      if (title != null && description != null) {
+        if (
+          title.trim() != props.title &&
+          description.trim() != props.description
+        ) {
+          const myHeader = new Headers();
+          myHeader.append("id", "0");
+          myHeader.append("Content-type", "application/json");
+          const myBody = JSON.stringify({
+            title: title,
+            description: description,
+          });
+          const fetchData = await fetch(
+            `${import.meta.env.VITE_BACKEND_URL}todos/update-todo/${props._id}`,
+            { method: "PUT", headers: myHeader, body: myBody }
+          );
+          const data = await fetchData.json();
+          console.log(data.message);
+          props.fetchTodo();
+        }
+      }
+    } catch (error) {
+      console.log("Error:", error);
     }
   }
 
@@ -56,11 +86,11 @@ function Todo(props: {
       <div>{props.title}</div>
       <div>{props.description}</div>
       <div>
-        <button>✏️</button>
+        <button onClick={handleUpdate}>✏️</button>
         <button onClick={handleDelete}>🗑️</button>
         <input
           onChange={() => {
-            handleClick("checkbox");
+            handleCheckBox();
           }}
           type="checkbox"
           checked={props.completed}
